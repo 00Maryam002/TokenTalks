@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokentalks</title>
+    <style>
+        /* Basic Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Full width on small screens */
+    max-width: 400px; /* Limit max width */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.profile-card {
+    text-align: center; /* Center text */
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+}
+
+.profile-buttons button {
+    margin: 0 5px; /* Spacing between buttons */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%; /* Increase width for small screens */
+        margin: 20% auto; /* Adjust margin for better visibility */
+        padding: 15px; /* Adjust padding for small screens */
+    }
+
+    .profile-card img {
+        width: 50px; /* Smaller image size */
+        height: 50px; /* Maintain aspect ratio */
+    }
+}
+
+        /* Basic Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { display: flex; flex-direction: column; align-items: center; background: linear-gradient(135deg, #a8d5ba, #f3b8c9); color: #333; min-height: 100vh; }
+        
+        /* Header */
+        header { width: 100%; background-color: #fff; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; }
+        header img { width: 40px; height: auto; border-radius: 50%; }
+        header h1 { font-size: 1.2rem; color: #333; margin-left: 10px; }
+        header .logo-container { display: flex; align-items: center; }
+        header nav { display: flex; gap: 15px; }
+        header nav a { color: #333; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: color 0.3s; }
+        header nav a:hover { color: #04AA6D; }
+
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); padding-top: 60px; }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 8px; }
+        .modal-content input[type="text"], .modal-content input[type="password"],.modal-content input[type="email"], .modal-content input[type="file"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        .modal-content button { background-color: #4a90e2; color: #fff; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 1rem; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
+        .close:hover { color: red; cursor: pointer; }
+
+        /* All Posts Section */
+        .all-posts-card { width: 90%; max-width: 800px; margin: 20px 0; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .post-card { padding: 10px; border-bottom: 1px solid #eee; margin-bottom: 15px; }
+        .post-card .buttons { display: flex; justify-content: space-between; margin-top: 10px; }
+        .like-btn { color: #ccc; cursor: pointer; font-size: 1.2rem; transition: color 0.3s; }
+        .like-btn.liked { color: red; }
+        .follow-btn { padding: 5px 10px; background-color: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
+        .follow-btn:hover { background-color: #357abd; }
+
+        /* Profile Card */
+        .profile-card { text-align: center; padding: 20px; }
+        .profile-card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 15px; }
+        .profile-card h3 { font-size: 1.5rem; color: #333; }
+        .profile-card p { color: #666; margin: 10px 0; font-size: 0.95rem; }
+        .profile-card .profile-buttons button { background-color: #4a90e2; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 8px 12px; font-size: 0.9rem; margin: 5px; transition: background 0.3s, transform 0.1s; }
+        .profile-card .profile-buttons button:hover { background-color: #357abd; transform: scale(1.05); }
+
+        /* Home Page */
+        .home-container { padding: 20px; text-align: center; }
+        .crypto-introduction { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 20px 0; }
+        .crypto-introduction h2 { margin-bottom: 10px; }
+        .crypto-introduction p { margin: 5px 0; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) { header { flex-direction: column; } header nav a { font-size: 0.8rem; } }
+    </style>
+</head>
+<body>
+
+
+<!-- Header with Sign Up Link -->
+<header>
+    <div class="logo-container">
+        <img src="C:\Users\lotus\Documents\LOGO.webp" alt="Tokentalks Logo">
+        <h1>Tokentalks</h1>
+    </div>
+    <nav>
+        <a href="#" onclick="showHome()">Home</a>
+        <a href="#" onclick="openModal('loginModal')">Login</a>
+        <a href="#" onclick="openModal('signupModal')">Sign Up</a>
+        <a href="#" onclick="openModal('profileModal')">Profile</a>
+        <a href="#" onclick="showAllPosts()">All Posts</a>
+    </nav>
+</header>
+
+<!-- Home Page -->
+<div class="home-container" id="homeContainer">
+    <div class="crypto-introduction">
+        <h2>Introducing This Week's Cryptocurrency</h2>
+        <img src="https://a.c-dn.net/c/content/dam/publicsites/igcom/uk/images/Rebrand/Hero/Other/Bitcoin_trading_Desktop.jpg/jcr:content/renditions/original-size.webp" alt="Bitcoin" class="bitcoin-image">
+        <p><strong>Name:</strong> Bitcoin</p>
+        <p><strong>Description:</strong> Bitcoin is a decentralized digital currency, without a central bank or single administrator.</p>
+        <p><strong>Market Cap:</strong> $800 Billion</p>
+        <p><strong>Weekly Change:</strong> +5%</p>
+        <button class="explore-button" onclick="showAllPosts()">Explore Posts</button>
+    </div>
+</div>
+
+<style>
+    /* Additional Styles for Home Page */
+    .crypto-introduction {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6)), url('https://static.news.bitcoin.com/wp-content/uploads/2024/08/dddsssawellas.jpg') no-repeat center center / cover;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin: 20px auto;
+        max-width: 90%;
+        color: #333;
+        text-align: center;
+    }
+
+    .crypto-introduction h2 {
+        margin-bottom: 15px;
+        font-size: 2rem;
+        color: #4a90e2;
+    }
+
+    .crypto-introduction p {
+        margin: 5px 0;
+        font-size: 1.1rem;
+    }
+
+    .bitcoin-image {
+        width: 100px;
+        height: auto;
+        margin: 20px 0;
+    }
+
+    .explore-button {
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .explore-button:hover {
+        background-color: #357abd;
+    }
+</style>
+
+
+<!-- All Posts card -->
+<div class="all-posts-card" id="allPostsCard" style="display: none;">
+    <h2>All Posts</h2>
+    <div class="post-card">
+        <h3>Post Title 1 by <span class="author-name">User1</span></h3>
+        <p>Sample text for post 1.</p>
+        <div class="buttons">
+            <span class="like-btn" onclick="toggleLike(this)">&#9829;</span>
+            <button class="follow-btn" onclick="openFollowModal('User1', this)">Follow</button>
+        </div>
+    </div>
+    <div class="post-card">
+        <h3>Post Title 2 by <span class="author-name">User2</span></h3>
+        <p>Sample text for post 2.</p>
+        <div class="buttons">
+            <span class="like-btn" onclick="toggleLike(this)">&#9829;</span>
+            <button class="follow-btn" onclick="openFollowModal('User2', this)">Follow</button>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h2>Login</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button>Login</button>
+    </div>
+</div>
+<!-- Sign-Up Modal -->
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('signupModal')">&times;</span>
+        <h2>Sign Up</h2>
+        <input type="text" placeholder="Username" id="signupUsername">
+        <input type="email" placeholder="Email" id="signupEmail">
+        <input type="password" placeholder="Password" id="signupPassword">
+        <button onclick="signUp()">Sign Up</button>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('profileModal')">&times;</span>
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/80" alt="Profile Picture">
+            <h3>Username</h3>
+            <p>Email: user@example.com</p>
+            <p>Followers: 120</p>
+            <div class="profile-buttons">
+                <button onclick="openModal('editProfileModal')">Edit Profile</button>
+                <button onclick="openModal('changePasswordModal')">Change Password</button>
+                <button onclick="showAllPosts()">View All Posts</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
+        <h2>Edit Profile</h2>
+        <input type="text" placeholder="New Username">
+        <input type="text" placeholder="New Email">
+        <input type="file" accept="image/*">
+        <button onclick="saveChanges()">Save Changes</button>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div id="changePasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
+        <h2>Change Password</h2>
+        <input type="password" placeholder="Current Password">
+        <input type="password" placeholder="New Password">
+        <button onclick="changePassword()">Change Password</button>
+    </div>
+</div>
+<!-- Follow User Modal -->
+<div id="followUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('followUserModal')">&times;</span>
+        <h2>Follow User</h2>
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/80" alt="Profile Picture">
+            <h3 id="followUserName">User's Name</h3>
+            <p id="userEmail">Email: user@example.com</p>
+            <p id="userFollowers">Followers: 0</p>
+            <div class="profile-buttons">
+                <button id="followActionBtn" onclick="followUser()">Follow</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const users = [
+        { username: 'User1', email: 'user1@example.com', followers: 120 },
+        { username: 'User2', email: 'user2@example.com', followers: 80 },
+        { username: 'User3', email: 'user3@example.com', followers: 45 },
+    ];
+
+    let following = {}; // Object to keep track of following status
+
+    function openFollowModal(userName, button) {
+        const user = users.find(u => u.username === userName);
+        
+        if (user) {
+            document.getElementById('followUserName').innerText = user.username;
+            document.getElementById('userEmail').innerText = `Email: ${user.email}`;
+            document.getElementById('userFollowers').innerText = `Followers: ${user.followers}`;
+
+            const followButton = document.getElementById('followActionBtn');
+            followButton.innerText = following[user.username] ? "Unfollow" : "Follow";
+            followButton.setAttribute('data-username', user.username);
+            openModal('followUserModal');
+        }
+    }
+
+    function followUser() {
+        const username = document.getElementById('followActionBtn').getAttribute('data-username');
+        
+        // Toggle following status
+        following[username] = !following[username];
+        
+        // Update the button text
+        const followButton = document.getElementById('followActionBtn');
+        followButton.innerText = following[username] ? "Unfollow" : "Follow";
+        
+        // Optionally update follower count
+        const user = users.find(u => u.username === username);
+        if (user) {
+            user.followers += following[username] ? 1 : -1; // Increment or decrement follower count
+            document.getElementById('userFollowers').innerText = `Followers: ${user.followers}`;
+        }
+        
+        alert(`${following[username] ? 'You are now following' : 'You have unfollowed'} ${username}`);
+    }
+</script>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    function toggleLike(element) {
+        element.classList.toggle('liked');
+    }
+    
+    function saveChanges() {
+        // Implement save changes logic here
+        alert("Changes saved");
+        closeModal('editProfileModal');
+    }
+
+    function changePassword() {
+        // Implement change password logic here
+        alert("Password changed");
+        closeModal('changePasswordModal');
+    }
+
+    function showAllPosts() {
+        document.getElementById('homeContainer').style.display = "none";
+        document.getElementById('allPostsCard').style.display = "block";
+    }
+
+    function showHome() {
+        document.getElementById('homeContainer').style.display = "block";
+        document.getElementById('allPostsCard').style.display = "none";
+    }
+     
+    function signUp() {
+        const username = document.getElementById('signupUsername').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+
+        if (username && email && password) {
+            alert(`Registered successfully with Username: ${username}, Email: ${email}`);
+            closeModal('signupModal');
+        } else {
+            alert('Please fill in all fields');
+        }
+    }
+
+</script>
+</body>
+</html>
+
+
+              
+
+
+
+
+
+
+
+
